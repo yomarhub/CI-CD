@@ -16,6 +16,7 @@ router.get("/", async (req, res) => {
     checks.database = "ok";
   } catch (error) {
     checks.database = "error";
+    checks.error = error.message;
     status = 503;
   }
 
