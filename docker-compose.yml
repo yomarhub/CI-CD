@@ -14,6 +14,14 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    deploy:
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: 512M
+        reservations:
+          cpus: "0.10"
+          memory: 128M
     networks:
       - shoplite_net
 
@@ -28,12 +36,28 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: 256M
+        reservations:
+          cpus: "0.10"
+          memory: 64M
     networks:
       - shoplite_net
 
   frontend:
     build: ./frontend
     container_name: shoplite_frontend
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: 128M
+        reservations:
+          cpus: "0.05"
+          memory: 32M
     networks:
       - shoplite_net
 
@@ -47,6 +71,14 @@ services:
     depends_on:
       - api
       - frontend
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: 64M
+        reservations:
+          cpus: "0.05"
+          memory: 16M
     networks:
       - shoplite_net
 
