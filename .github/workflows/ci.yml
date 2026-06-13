@@ -13,15 +13,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: "20"
+
+      - name: Set workdir
+        run: cd api
+
       - name: Install dependencies
         run: npm install
+
       # Run tests
       - name: Run tests
         run: npm test
+
       # Run lint
       - name: Run lint
         run: npm run lint
