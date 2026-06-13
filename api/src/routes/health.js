@@ -23,6 +23,7 @@ router.get("/", async (req, res) => {
     status: status === 200 ? "ok" : "error",
     service: "shoplite-api",
     checks,
+    change: "2026-06-13T19:02:45.125Z",
     timestamp: new Date().toISOString()
   });
 });
