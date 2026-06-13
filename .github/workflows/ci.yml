@@ -11,6 +11,10 @@ jobs:
   # Lancer tests, lint et build
   test-lint:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: api
+
     steps:
       - uses: actions/checkout@v3
 
@@ -18,9 +22,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "20"
-
-      - name: Set workdir
-        run: cd api
 
       - name: Install dependencies
         run: npm install
