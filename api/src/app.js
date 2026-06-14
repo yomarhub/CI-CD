@@ -19,7 +19,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/health", healthRoutes);
-app.use("/products", productRoutes);
+app.use("/products", productRoutes.router);
 
 app.use((req, res) => {
   res.status(404).json({ error: "Route not found" });
@@ -30,11 +30,15 @@ app.use((err, req, res) => {
     JSON.stringify({
       level: "error",
       message: err.message,
+      status: err.status || 500,
       timestamp: new Date().toISOString()
     })
   );
 
-  res.status(500).json({ error: "Internal server error" });
+  const status = err.status || 500;
+  const errorResponse = status === 500 ? { error: "Internal server error" } : { error: err.message };
+
+  res.status(status).json(errorResponse);
 });
 
 module.exports = app;
