@@ -6,7 +6,10 @@ const logger = require('./utils/logger');
 const port = Number(process.env.API_PORT || process.env.PORT || 3000);
 
 app.listen(port, '0.0.0.0', () => {
-  logger.info('ShopLite API started', { port, version: process.env.APP_VERSION || 'unknown' });
+  logger.info('ShopLite API started', {
+    port,
+    version: process.env.APP_VERSION || 'unknown',
+  });
 });
 
 process.on('uncaughtException', (err) => {

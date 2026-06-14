@@ -8,7 +8,12 @@ router.get('/', async (req, res) => {
     await db.query('SELECT 1');
     res.status(200).json({ status: 'ready', api: 'ok', database: 'ok' });
   } catch (error) {
-    res.status(503).json({ status: 'not ready', api: 'ok', database: 'error', error: error.message });
+    res.status(503).json({
+      status: 'not ready',
+      api: 'ok',
+      database: 'error',
+      error: error.message,
+    });
   }
 });
 
