@@ -1,11 +1,11 @@
-const { Pool } = require("pg");
+const { Pool } = require('pg');
 
 let pool;
 
 function getPool() {
   if (!pool) {
     pool = new Pool({
-      connectionString: process.env.DATABASE_URL
+      connectionString: process.env.DATABASE_URL,
     });
   }
 
@@ -16,7 +16,15 @@ async function query(sql, params = []) {
   return getPool().query(sql, params);
 }
 
+async function close() {
+  if (pool) {
+    await pool.end();
+    pool = undefined;
+  }
+}
+
 module.exports = {
   getPool,
-  query
+  query,
+  close,
 };

@@ -8,7 +8,9 @@
     "dev": "node src/server.js",
     "test": "jest --runInBand",
     "lint": "eslint src",
-    "format": "prettier --write \"src/**/*.js\" \"tests/**/*.js\""
+    "format": "prettier --write \"src/**/*.js\" \"tests/**/*.js\"",
+    "format:check": "prettier --check \"src/**/*.js\" \"tests/**/*.js\"",
+    "db:init": "node scripts/initTestDb.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -25,6 +27,27 @@
     "supertest": "^7.0.0"
   },
   "jest": {
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "collectCoverageFrom": [
+      "src/**/*.js",
+      "tests/**/*.js",
+      "!src/server.js"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 80,
+        "functions": 80,
+        "lines": 80,
+        "statements": 80
+      }
+    }
+  },
+  "prettier": {
+    "printWidth": 80,
+    "tabWidth": 2,
+    "useTabs": false,
+    "singleQuote": true,
+    "trailingComma": "es5",
+    "endOfLine": "lf"
   }
 }

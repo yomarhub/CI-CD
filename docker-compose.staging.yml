@@ -1,8 +1,28 @@
+name: CI/CD staging
 services:
+  db:
+    environment:
+      POSTGRES_DB: shoplite_staging
+      POSTGRES_USER: shoplite
+      POSTGRES_PASSWORD: staging_password
+      DATABASE_URL: postgres://shoplite:staging_password@db:5432/shoplite_staging
+    networks:
+      - shoplite_staging
+
   api:
     environment:
-      APP_VERSION: staging-starter
+      NODE_ENV: staging
+      LOG_LEVEL: info
+      DATABASE_URL: postgres://shoplite:staging_password@db:5432/shoplite_staging
+    networks:
+      - shoplite_staging
 
   proxy:
     ports:
-      - "8081:80"
+      - "${HTTP_PORT:-8081}:80"
+    networks:
+      - shoplite_staging
+
+networks:
+  shoplite_staging:
+    driver: bridge
