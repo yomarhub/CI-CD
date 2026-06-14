@@ -1,31 +1,31 @@
-const express = require("express");
-const db = require("../db");
+const express = require('express');
+const db = require('../db');
 
 const router = express.Router();
 
-router.get("/", async (req, res) => {
+router.get('/', async (req, res) => {
   const checks = {
-    api: "ok",
-    database: "unknown"
+    api: 'ok',
+    database: 'unknown',
   };
 
   let status = 200;
 
   try {
-    await db.query("SELECT 1");
-    checks.database = "ok";
+    await db.query('SELECT 1');
+    checks.database = 'ok';
   } catch (error) {
-    checks.database = "error";
+    checks.database = 'error';
     checks.error = error.message;
     status = 503;
   }
 
   res.status(status).json({
-    status: status === 200 ? "ok" : "error",
-    service: "shoplite-api",
+    status: status === 200 ? 'ok' : 'error',
+    service: 'shoplite-api',
     checks,
-    change: "2026-06-13T19:02:45.125Z",
-    timestamp: new Date().toISOString()
+    change: '2026-06-13T19:02:45.125Z',
+    timestamp: new Date().toISOString(),
   });
 });
 
