@@ -1,4 +1,4 @@
-name: CI starter a completer
+name: CI
 
 on:
   push:
