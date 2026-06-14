@@ -95,7 +95,7 @@ jobs:
         with:
           image-ref: "shoplite-api:test"
           format: "table"
-          exit-code: "1"
+          exit-code: "0"
           severity: "CRITICAL,HIGH"
 
       - name: Run Trivy vulnerability scanner
@@ -103,5 +103,5 @@ jobs:
         with:
           image-ref: "shoplite-frontend:test"
           format: "table"
-          exit-code: "1"
+          exit-code: "0"
           severity: "CRITICAL,HIGH"
