@@ -1,0 +1,38 @@
+name: CI/CD dev
+
+services:
+  db:
+    environment:
+      POSTGRES_DB: shoplite_dev
+      POSTGRES_USER: shoplite
+      POSTGRES_PASSWORD: dev_password
+    ports:
+      - "5433:5432"
+    networks:
+      - shoplite_dev
+
+  api:
+    build:
+      context: ./api
+      target: development
+    volumes:
+      - ./api/src:/app/src:ro
+    environment:
+      NODE_ENV: development
+      LOG_LEVEL: debug
+      DATABASE_URL: postgres://shoplite:dev_password@db:5433/shoplite_dev
+    ports:
+      - "3000:3000"
+    restart: "no"
+    networks:
+      - shoplite_dev
+
+  proxy:
+    ports:
+      - "${HTTP_PORT:-8080}:80"
+    networks:
+      - shoplite_dev
+
+networks:
+  shoplite_dev:
+    driver: bridge
