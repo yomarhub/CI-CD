@@ -10,6 +10,7 @@ on:
 env:
   COMPOSE_FILE: docker-compose.yml
   COMPOSE_STAGING: docker-compose.staging.yml
+  COMPOSE_PROD: docker-compose.prod.yml
   COMPOSE_PROJECT: shoplite
 
 permissions:
@@ -112,7 +113,7 @@ jobs:
 
       - name: Deploy production stack
         run: |
-          docker compose -p $COMPOSE_PROJECT -f $COMPOSE_FILE up -d --wait
+          docker compose -p $COMPOSE_PROJECT -f $COMPOSE_FILE -f $COMPOSE_PROD up -d --wait
         env:
           APP_VERSION: ${{ github.sha }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD || 'prod_password' }}
@@ -144,15 +145,15 @@ jobs:
         run: git checkout stable
 
       - name: Rebuild stable images
-        run: docker compose -p $COMPOSE_PROJECT -f $COMPOSE_FILE build --no-cache
+        run: docker compose -p $COMPOSE_PROJECT -f $COMPOSE_FILE -f $COMPOSE_PROD build --no-cache
 
       - name: Redeploy stable
-        run: docker compose -p $COMPOSE_PROJECT -f $COMPOSE_FILE up -d --wait
+        run: docker compose -p $COMPOSE_PROJECT -f $COMPOSE_FILE -f $COMPOSE_PROD up -d --wait
 
       - name: Verify rollback
         run: |
           chmod +x scripts/smoke-test.sh
-          BASE_URL=http://localhost:8080 bash scripts/smoke-test.sh
+          BASE_URL=http://localhost bash scripts/smoke-test.sh
 
       - name: Notify rollback
         run: |
