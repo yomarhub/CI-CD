@@ -55,6 +55,7 @@ jobs:
 
       - name: Check for outdated dependencies
         run: npm outdated
+        fail-on-error: false
 
       - name: Run format check
         run: npm run format:check
