@@ -20,7 +20,7 @@ services:
     environment:
       NODE_ENV: development
       LOG_LEVEL: debug
-      DATABASE_URL: postgres://shoplite:dev_password@db:5433/shoplite_dev
+      DATABASE_URL: postgres://shoplite:dev_password@db:5432/shoplite_dev
     ports:
       - "3000:3000"
     restart: "no"
