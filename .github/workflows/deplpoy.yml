@@ -1,0 +1,52 @@
+name: Deploy
+
+on:
+  push:
+    branches: ["develop", "main"]
+    tags: ["v*"]
+  workflow_dispatch:
+
+jobs:
+  deploy-staging:
+    name: Deploy on remote Docker server
+    if: github.ref == 'refs/heads/develop'
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      # - name: Deploy by SSH
+      #   uses: appleboy/ssh-action@v1.0.3
+      #   with:
+      #     host: ${{ secrets.SSH_HOST }}
+      #     username: ${{ secrets.SSH_USER }}
+      #     key: ${{ secrets.SSH_PRIVATE_KEY }}
+      #     script: |
+      #       cd /opt/trainshop
+      #       docker compose -f docker-compose.prod.yml --env-file .env pull
+      #       docker compose -f docker-compose.prod.yml --env-file .env up -d
+      #       docker compose ps
+      #       curl -f http://localhost/api/health
+      - name: Fake deploy example
+        run: echo "Deploying to remote staging server..."
+
+  deploy-production:
+    name: Deploy on remote Docker server
+    if: startsWith(github.ref, 'refs/tags/v') && github.event.repository.default_branch == 'main'
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      # - name: Deploy by SSH
+      #   uses: appleboy/ssh-action@v1.0.3
+      #   with:
+      #     host: ${{ secrets.SSH_HOST }}
+      #     username: ${{ secrets.SSH_USER }}
+      #     key: ${{ secrets.SSH_PRIVATE_KEY }}
+      #     script: |
+      #       cd /opt/trainshop
+      #       docker compose -f docker-compose.prod.yml --env-file .env pull
+      #       docker compose -f docker-compose.prod.yml --env-file .env up -d
+      #       docker compose ps
+      #       curl -f http://localhost/api/health
+      - name: Fake deploy example
+        run: echo "Deploying to remote production server..."
