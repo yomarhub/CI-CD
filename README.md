@@ -1,8 +1,8 @@
 # ShopLite - Starter TP final DevOps
 
-main| [![CI](https://github.com/yomarhub/CI-CD/actions/workflows/ci.yml/badge.svg)](https://github.com/yomarhub/CI-CD/actions/workflows/ci.yml) [![CD](https://github.com/yomarhub/CI-CD/actions/workflows/cd.yml/badge.svg)](https://github.com/yomarhub/CI-CD/actions/workflows/cd.yml)
+main: [![CI](https://github.com/yomarhub/CI-CD/actions/workflows/ci.yml/badge.svg)](https://github.com/yomarhub/CI-CD/actions/workflows/ci.yml) [![CD](https://github.com/yomarhub/CI-CD/actions/workflows/cd.yml/badge.svg)](https://github.com/yomarhub/CI-CD/actions/workflows/cd.yml)
 
-develop| [![CI](https://github.com/yomarhub/CI-CD/actions/workflows/ci.yml/badge.svg?branch=develop)](https://github.com/yomarhub/CI-CD/actions/workflows/ci.yml) [![CD](https://github.com/yomarhub/CI-CD/actions/workflows/cd.yml/badge.svg?branch=develop)](https://github.com/yomarhub/CI-CD/actions/workflows/cd.yml)
+develop: [![CI](https://github.com/yomarhub/CI-CD/actions/workflows/ci.yml/badge.svg?branch=develop)](https://github.com/yomarhub/CI-CD/actions/workflows/ci.yml) [![CD](https://github.com/yomarhub/CI-CD/actions/workflows/cd.yml/badge.svg?branch=develop)](https://github.com/yomarhub/CI-CD/actions/workflows/cd.yml)
 
 ShopLite est un projet de base pour un TP final DevOps.
 
