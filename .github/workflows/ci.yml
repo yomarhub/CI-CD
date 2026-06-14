@@ -54,8 +54,7 @@ jobs:
         run: npm audit fix
 
       - name: Check for outdated dependencies
-        run: npm outdated
-        fail-on-error: false
+        run: npm outdated || true
 
       - name: Run format check
         run: npm run format:check
