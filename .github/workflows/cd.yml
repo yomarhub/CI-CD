@@ -12,8 +12,10 @@ env:
   COMPOSE_STAGING: docker-compose.staging.yml
   COMPOSE_PROJECT: shoplite
 
+permissions:
+  contents: write
+
 jobs:
-  # ─── 1. Build ──────────────────────────────────────────────────────────────
   build:
     name: Build Docker images
     runs-on: ubuntu-latest
@@ -42,7 +44,6 @@ jobs:
           path: images.tar.gz
           retention-days: 1
 
-  # ─── 2. Staging ────────────────────────────────────────────────────────────
   staging:
     name: Deploy → staging
     runs-on: ubuntu-latest
@@ -91,7 +92,6 @@ jobs:
             -f $COMPOSE_STAGING \
             down -v
 
-  # ─── 3. Production (simulée) ───────────────────────────────────────────────
   production:
     name: Deploy → production
     runs-on: ubuntu-latest
@@ -127,7 +127,6 @@ jobs:
           git tag -f stable
           git push origin stable --force
 
-  # ─── 4. Rollback ───────────────────────────────────────────────────────────
   rollback:
     name: Rollback production
     runs-on: ubuntu-latest
