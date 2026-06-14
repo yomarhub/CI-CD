@@ -120,7 +120,7 @@ jobs:
       - name: Run smoke tests (production)
         run: |
           chmod +x scripts/smoke-test.sh
-          BASE_URL=http://localhost:8080 bash scripts/smoke-test.sh
+          BASE_URL=http://localhost bash scripts/smoke-test.sh
 
       - name: Tag stable release
         if: success()
