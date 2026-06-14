@@ -10,6 +10,7 @@ on:
 env:
   COMPOSE_FILE: docker-compose.yml
   COMPOSE_STAGING: docker-compose.staging.yml
+  COMPOSE_PROJECT: shoplite
 
 jobs:
   # ─── 1. Build ──────────────────────────────────────────────────────────────
@@ -27,11 +28,11 @@ jobs:
       - name: Build images
         run: |
           APP_VERSION=${{ steps.tag.outputs.tag }} \
-            docker compose -f $COMPOSE_FILE build --no-cache
+            docker compose -p $COMPOSE_PROJECT -f $COMPOSE_FILE build --no-cache
 
       - name: Export images
         run: |
-          docker save shoplite-api shoplite-frontend \
+          docker save $COMPOSE_PROJECT-api $COMPOSE_PROJECT-frontend \
             | gzip > images.tar.gz
 
       - name: Upload images artifact
@@ -61,7 +62,7 @@ jobs:
 
       - name: Start staging stack
         run: |
-          docker compose \
+          docker compose -p $COMPOSE_PROJECT \
             -f $COMPOSE_FILE \
             -f $COMPOSE_STAGING \
             up -d --wait
@@ -77,7 +78,7 @@ jobs:
       - name: Show logs on failure
         if: failure()
         run: |
-          docker compose \
+          docker compose -p $COMPOSE_PROJECT \
             -f $COMPOSE_FILE \
             -f $COMPOSE_STAGING \
             logs --no-color
@@ -85,7 +86,7 @@ jobs:
       - name: Teardown staging
         if: always()
         run: |
-          docker compose \
+          docker compose -p $COMPOSE_PROJECT \
             -f $COMPOSE_FILE \
             -f $COMPOSE_STAGING \
             down -v
@@ -110,7 +111,7 @@ jobs:
 
       - name: Deploy production stack
         run: |
-          docker compose -f $COMPOSE_FILE up -d --wait
+          docker compose -p $COMPOSE_PROJECT -f $COMPOSE_FILE up -d --wait
         env:
           APP_VERSION: ${{ github.sha }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD || 'prod_password' }}
@@ -143,10 +144,10 @@ jobs:
         run: git checkout stable
 
       - name: Rebuild stable images
-        run: docker compose -f $COMPOSE_FILE build --no-cache
+        run: docker compose -p $COMPOSE_PROJECT -f $COMPOSE_FILE build --no-cache
 
       - name: Redeploy stable
-        run: docker compose -f $COMPOSE_FILE up -d --wait
+        run: docker compose -p $COMPOSE_PROJECT -f $COMPOSE_FILE up -d --wait
 
       - name: Verify rollback
         run: |
