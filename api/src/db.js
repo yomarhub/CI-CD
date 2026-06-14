@@ -16,7 +16,15 @@ async function query(sql, params = []) {
   return getPool().query(sql, params);
 }
 
+async function close() {
+  if (pool) {
+    await pool.end();
+    pool = undefined;
+  }
+}
+
 module.exports = {
   getPool,
-  query
+  query,
+  close
 };
