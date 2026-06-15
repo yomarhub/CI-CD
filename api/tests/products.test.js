@@ -72,6 +72,19 @@ describeIfDatabase('Tests d’intégration produits avec PostgreSQL', () => {
     expect(response.body.error).toBe('Route not found');
   });
 
+  test('GET /products retourne un tableau avec au moins un produit', async () => {
+    const res = await request(app).get('/products');
+    expect(res.statusCode).toBe(200);
+    expect(res.body).toHaveProperty('data');
+    expect(Array.isArray(res.body.data)).toBe(true);
+    expect(res.body.data.length).toBeGreaterThan(0);
+    res.body.data.forEach(product => {
+      expect(product).toHaveProperty('id');
+      expect(product).toHaveProperty('name');
+      expect(product).toHaveProperty('price_cents');
+    });
+  });
+
   test('GET /products renvoie 500 quand la base échoue', async () => {
     jest.spyOn(db, 'query').mockRejectedValueOnce(new Error('boom'));
 
