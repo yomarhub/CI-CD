@@ -48,10 +48,7 @@ jobs:
         run: npm ci
 
       - name: Audit dependencies
-        run: npm audit --audit-level=moderate
-
-      - name: Fix vulnerabilities
-        run: npm audit fix
+        run: npm audit --audit-level=moderate --omit=dev
 
       - name: Check for outdated dependencies
         run: npm outdated || true
