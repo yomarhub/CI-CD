@@ -9,6 +9,7 @@
 | 3 | `additional properties 'env_file' not allowed` | 2026-06-14 | `env_file` placé à la racine du fichier override au lieu d'être dans chaque service | Déplacement de `env_file` à l'intérieur de chaque bloc `services.<nom>` | Fichiers valides |
 | 4 | `target stage "development" could not be found` | 2026-06-14 | `docker-compose.dev.yml` ciblait `target: development` mais le Dockerfile n'avait qu'un seul stage | Conversion du Dockerfile en multi-stage (`development` + `production`) | Build dev fonctionnel |
 | 5 | CD ne se déclenche pas sur `feature/docker-foundation` | 2026-06-14 | `workflow_run` nécessite que le fichier workflow soit sur la branche par défaut (`main`) | Merge sur `main` requis | Résolu après merge |
+| 6 | `GET /api/products` retourne 500 — test Jest échoue | 2026-06-15 | Incident contrôlé : colonne SQL `name_BROKEN` introduite volontairement dans la requête `SELECT` du route `/products` | `git revert HEAD --no-edit && docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d --build` | Route restaurée, données PostgreSQL intactes (volume non supprimé), test repassé vert |
 
 ## Procédure de diagnostic rapide
 
